@@ -1,6 +1,7 @@
 name: album_searcher_for_google_photos
 description: >
-  Album Searcher for Google Photos gives you an enhanced search experience for shared albums.
+  Album Searcher for Google Photos gives you an enhanced search experience for
+  shared albums.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -16,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+10000
+version: 1.0.1+10001
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -58,7 +59,6 @@ dependency_overrides:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 
@@ -80,7 +80,6 @@ flutter:
   assets:
     - files/browser_client_secret.json
     - files/desktop_client_secret.json
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
