@@ -2,7 +2,7 @@ import 'package:album_searcher_for_google_photos/route_information_parsers/app_r
 import 'package:album_searcher_for_google_photos/route_paths/route_path.dart';
 import 'package:album_searcher_for_google_photos/router_delegates/app_router_delegate.dart';
 import 'package:album_searcher_for_google_photos/services/album_service.dart';
-import 'package:album_searcher_for_google_photos/services/authentication_service.dart';
+import 'package:album_searcher_for_google_photos/services/authentication/authentication_service.dart';
 import 'package:album_searcher_for_google_photos/services/media_item_service.dart';
 import 'package:album_searcher_for_google_photos/services/shared_album_service.dart';
 import 'package:album_searcher_for_google_photos/services/storage_service.dart';
@@ -17,39 +17,43 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final storageService = StorageService();
+
   final authenticationStateData = AuthenticationStateData();
-  final authenticationService = AuthenticationService(
-    authenticationStateData: authenticationStateData,
-    storageService: storageService,
-  );
-  final albumService = AlbumService(
-    authenticationStateData: authenticationStateData,
-  );
   final layoutStateData = LayoutStateData(
     layoutMode: await storageService.getLayoutMode(),
   );
-  final mediaItemService = MediaItemService(
-    authenticationStateData: authenticationStateData,
-  );
-  final routeInformationParser = AppRouteInformationParser();
   final routerStateData = RouterStateData();
-  final routerDelegate = AppRouterDelegate(
-    authenticationStateData: authenticationStateData,
-    routerStateData: routerStateData,
-  );
   final sharedAlbumStateData = SharedAlbumStateData(
     sharedAlbums: await storageService.getSharedAlbums(),
+  );
+  final themeStateData = ThemeStateData(
+    themeMode: await storageService.getThemeMode(),
+  );
+
+  final albumService = AlbumService(
+    authenticationStateData: authenticationStateData,
+  );
+  final authenticationService = AuthenticationService(
+    authenticationStateData: authenticationStateData,
+    layoutStateData: layoutStateData,
+    sharedAlbumStateData: sharedAlbumStateData,
+    storageService: storageService,
+    themeStateData: themeStateData,
+  );
+  final mediaItemService = MediaItemService(
+    authenticationStateData: authenticationStateData,
   );
   final sharedAlbumService = SharedAlbumService(
     authenticationStateData: authenticationStateData,
     sharedAlbumStateData: sharedAlbumStateData,
     storageService: storageService,
   );
-  final themeStateData = ThemeStateData(
-    themeMode: await storageService.getThemeMode(),
-  );
 
-  await authenticationService.signInSilent();
+  try {
+    await authenticationService.signInSilent();
+  } catch (e) {
+    await authenticationService.signOut();
+  }
 
   runApp(
     App(
@@ -58,8 +62,11 @@ Future<void> main() async {
       authenticationStateData: authenticationStateData,
       layoutStateData: layoutStateData,
       mediaItemService: mediaItemService,
-      routeInformationParser: routeInformationParser,
-      routerDelegate: routerDelegate,
+      routeInformationParser: AppRouteInformationParser(),
+      routerDelegate: AppRouterDelegate(
+        authenticationStateData: authenticationStateData,
+        routerStateData: routerStateData,
+      ),
       routerStateData: routerStateData,
       sharedAlbumService: sharedAlbumService,
       sharedAlbumStateData: sharedAlbumStateData,

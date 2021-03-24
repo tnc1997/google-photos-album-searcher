@@ -52,7 +52,6 @@ class _AlbumPageState extends State<AlbumPage> {
                         );
                         break;
                       case LayoutMode.list:
-                      default:
                         mediaItemsSliver = MediaItemsSliverList(
                           mediaItems: snapshot.data!.toList()..sort(),
                         );

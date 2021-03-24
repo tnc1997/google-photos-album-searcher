@@ -37,6 +37,10 @@ class StorageService {
   final _sharedPreferences = SharedPreferences.getInstance();
   final _themeModeKey = 'themeMode';
 
+  Future<void> clear() async {
+    await (await _sharedPreferences).clear();
+  }
+
   Future<Credentials?> getCredentials() async {
     final string = (await _sharedPreferences).getString(_credentialsKey);
 

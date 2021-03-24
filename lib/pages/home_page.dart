@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
           );
           break;
         case LayoutMode.list:
-        default:
           albumsSliver = AlbumsSliverList(
             albums: sharedAlbums..sort(),
           );
