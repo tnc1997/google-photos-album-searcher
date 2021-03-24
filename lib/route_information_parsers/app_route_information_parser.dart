@@ -16,7 +16,7 @@ class AppRouteInformationParser extends RouteInformationParser<RoutePath> {
     switch (uri.pathSegments.length) {
       case 1:
         switch (uri.pathSegments[0]) {
-          case 'login':
+          case 'welcome':
             return SynchronousFuture(WelcomeRoutePath());
           case 'settings':
             return SynchronousFuture(SettingsRoutePath());
@@ -48,7 +48,7 @@ class AppRouteInformationParser extends RouteInformationParser<RoutePath> {
       );
     } else if (configuration is WelcomeRoutePath) {
       return RouteInformation(
-        location: '/login',
+        location: '/welcome',
       );
     } else if (configuration is SettingsRoutePath) {
       return RouteInformation(
