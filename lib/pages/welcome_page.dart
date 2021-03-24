@@ -148,6 +148,8 @@ class _WelcomePageState extends State<WelcomePage> {
   void initState() {
     super.initState();
     _tapGestureRecognizer = TapGestureRecognizer()
-      ..onTap = () async => await launch('/terms.html');
+      ..onTap = () async => await launch(
+            'https://albumsearcherforgooglephotos.thomasclark.app/terms.html',
+          );
   }
 }
