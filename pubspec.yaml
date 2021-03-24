@@ -25,7 +25,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_svg: ^0.21.0-nullsafety.0
   http: ^0.13.0
   json_annotation: ^4.0.0
   oauth2: ^2.0.0
@@ -34,10 +34,9 @@ dependencies:
   url_launcher: ^6.0.0
 
 dev_dependencies:
+  build_runner: ^1.0.0
   flutter_test:
     sdk: flutter
-
-  build_runner: ^1.0.0
   json_serializable: ^4.0.0
 
 dependency_overrides:
@@ -80,6 +79,7 @@ flutter:
   assets:
     - files/browser_client_secret.json
     - files/desktop_client_secret.json
+    - images/image-search.svg
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

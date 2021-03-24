@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:album_searcher_for_google_photos/pages/album_page.dart';
 import 'package:album_searcher_for_google_photos/pages/main_page.dart';
-import 'package:album_searcher_for_google_photos/pages/sign_in_page.dart';
+import 'package:album_searcher_for_google_photos/pages/welcome_page.dart';
 import 'package:album_searcher_for_google_photos/route_paths/album_route_path.dart';
 import 'package:album_searcher_for_google_photos/route_paths/home_route_path.dart';
 import 'package:album_searcher_for_google_photos/route_paths/route_path.dart';
 import 'package:album_searcher_for_google_photos/route_paths/settings_route_path.dart';
-import 'package:album_searcher_for_google_photos/route_paths/sign_in_route_path.dart';
+import 'package:album_searcher_for_google_photos/route_paths/welcome_route_path.dart';
 import 'package:album_searcher_for_google_photos/states/authentication_state.dart';
 import 'package:album_searcher_for_google_photos/states/router_state.dart';
+import 'package:flutter/material.dart';
 
 class AppRouterDelegate extends RouterDelegate<RoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<RoutePath> {
@@ -29,7 +29,7 @@ class AppRouterDelegate extends RouterDelegate<RoutePath>
   @override
   RoutePath? get currentConfiguration {
     if (authenticationStateData.client == null) {
-      return SignInRoutePath();
+      return WelcomeRoutePath();
     }
 
     final selectedAlbum = routerStateData.selectedAlbum;
@@ -66,8 +66,8 @@ class AppRouterDelegate extends RouterDelegate<RoutePath>
             ),
         ] else
           const MaterialPage<void>(
-            child: SignInPage(),
-            key: ValueKey('sign_in_page'),
+            child: WelcomePage(),
+            key: ValueKey('welcome_page'),
           ),
       ],
       onPopPage: (route, result) {
