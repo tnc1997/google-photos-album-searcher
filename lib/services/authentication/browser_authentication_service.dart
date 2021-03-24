@@ -1,38 +1,50 @@
 import 'dart:convert';
 import 'dart:html'; // ignore: avoid_web_libraries_in_flutter
 
-import 'package:album_searcher_for_google_photos/services/authentication_service.dart';
+import 'package:album_searcher_for_google_photos/services/authentication/authentication_service.dart';
+import 'package:album_searcher_for_google_photos/services/authentication/base_authentication_service.dart';
 import 'package:album_searcher_for_google_photos/services/storage_service.dart';
 import 'package:album_searcher_for_google_photos/states/authentication_state.dart';
+import 'package:album_searcher_for_google_photos/states/layout_state.dart';
+import 'package:album_searcher_for_google_photos/states/shared_album_state.dart';
+import 'package:album_searcher_for_google_photos/states/theme_state.dart';
 import 'package:flutter/services.dart';
 import 'package:oauth2/oauth2.dart';
 
 AuthenticationService createAuthenticationService(
   AuthenticationStateData authenticationStateData,
+  LayoutStateData layoutStateData,
+  SharedAlbumStateData sharedAlbumStateData,
   StorageService storageService,
+  ThemeStateData themeStateData,
 ) =>
     BrowserAuthenticationService(
       authenticationStateData: authenticationStateData,
+      layoutStateData: layoutStateData,
+      sharedAlbumStateData: sharedAlbumStateData,
       storageService: storageService,
+      themeStateData: themeStateData,
     );
 
-class BrowserAuthenticationService implements AuthenticationService {
-  final AuthenticationStateData _authenticationStateData;
-  final StorageService _storageService;
-
+class BrowserAuthenticationService extends BaseAuthenticationService {
   BrowserAuthenticationService({
     required AuthenticationStateData authenticationStateData,
+    required LayoutStateData layoutStateData,
+    required SharedAlbumStateData sharedAlbumStateData,
     required StorageService storageService,
-  })   : _authenticationStateData = authenticationStateData,
-        _storageService = storageService;
+    required ThemeStateData themeStateData,
+  }) : super(
+          assetBundleKey: 'files/browser_client_secret.json',
+          authenticationStateData: authenticationStateData,
+          layoutStateData: layoutStateData,
+          sharedAlbumStateData: sharedAlbumStateData,
+          storageService: storageService,
+          themeStateData: themeStateData,
+        );
 
   @override
-  Future<Client> signInInteractive() async {
-    final config = json.decode(
-      await rootBundle.loadString(
-        'files/browser_client_secret.json',
-      ),
-    );
+  Future<void> signInInteractive() async {
+    final config = json.decode(await rootBundle.loadString(assetBundleKey));
 
     final redirectUrl = Uri(
       scheme: Uri.base.scheme,
@@ -46,7 +58,7 @@ class BrowserAuthenticationService implements AuthenticationService {
       Uri.parse(config['web']['auth_uri']),
       Uri.parse(config['web']['token_uri']),
       secret: config['web']['client_secret'],
-      onCredentialsRefreshed: _onCredentialsRefreshed,
+      onCredentialsRefreshed: onCredentialsRefreshed,
     );
 
     final authorizationUrl = grant.getAuthorizationUrl(
@@ -72,35 +84,11 @@ class BrowserAuthenticationService implements AuthenticationService {
         Uri.parse(event.data.toString()).queryParameters,
       );
 
-      await _storageService.setCredentials(client.credentials);
+      await storageService.setCredentials(client.credentials);
 
-      return _authenticationStateData.client = client;
+      authenticationStateData.client = client;
     } finally {
       base.close();
     }
-  }
-
-  @override
-  Future<Client?> signInSilent() async {
-    final config = json.decode(
-      await rootBundle.loadString(
-        'files/browser_client_secret.json',
-      ),
-    );
-
-    final credentials = await _storageService.getCredentials();
-
-    if (credentials != null) {
-      return _authenticationStateData.client = Client(
-        credentials,
-        identifier: config['web']['client_id'],
-        secret: config['web']['client_secret'],
-        onCredentialsRefreshed: _onCredentialsRefreshed,
-      );
-    }
-  }
-
-  Future<void> _onCredentialsRefreshed(Credentials credentials) async {
-    await _storageService.setCredentials(credentials);
   }
 }

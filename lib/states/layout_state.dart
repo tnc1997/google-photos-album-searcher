@@ -22,9 +22,9 @@ class LayoutStateData extends ChangeNotifier {
 
   LayoutStateData({
     LayoutMode? layoutMode,
-  }) : _layoutMode = layoutMode ?? LayoutMode.list;
+  }) : _layoutMode = layoutMode;
 
-  LayoutMode? get layoutMode => _layoutMode;
+  LayoutMode get layoutMode => _layoutMode ?? LayoutMode.list;
 
   set layoutMode(LayoutMode? layoutMode) {
     if (layoutMode != _layoutMode) {

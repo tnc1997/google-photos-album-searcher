@@ -1,4 +1,4 @@
-import 'package:album_searcher_for_google_photos/services/authentication_service.dart';
+import 'package:album_searcher_for_google_photos/services/authentication/authentication_service.dart';
 import 'package:flutter/material.dart';
 
 class SignInElevatedButton extends StatelessWidget {

@@ -1,39 +1,51 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:album_searcher_for_google_photos/services/io_authentication_service.dart';
+import 'package:album_searcher_for_google_photos/services/authentication/authentication_service.dart';
+import 'package:album_searcher_for_google_photos/services/authentication/io_authentication_service.dart';
 import 'package:album_searcher_for_google_photos/services/storage_service.dart';
 import 'package:album_searcher_for_google_photos/states/authentication_state.dart';
+import 'package:album_searcher_for_google_photos/states/layout_state.dart';
+import 'package:album_searcher_for_google_photos/states/shared_album_state.dart';
+import 'package:album_searcher_for_google_photos/states/theme_state.dart';
 import 'package:flutter/services.dart';
 import 'package:oauth2/oauth2.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-IoAuthenticationService createAuthenticationService(
+AuthenticationService createAuthenticationService(
   AuthenticationStateData authenticationStateData,
+  LayoutStateData layoutStateData,
+  SharedAlbumStateData sharedAlbumStateData,
   StorageService storageService,
+  ThemeStateData themeStateData,
 ) =>
     DesktopAuthenticationService(
       authenticationStateData: authenticationStateData,
+      layoutStateData: layoutStateData,
+      sharedAlbumStateData: sharedAlbumStateData,
       storageService: storageService,
+      themeStateData: themeStateData,
     );
 
-class DesktopAuthenticationService implements IoAuthenticationService {
-  final AuthenticationStateData _authenticationStateData;
-  final StorageService _storageService;
-
+class DesktopAuthenticationService extends IoAuthenticationService {
   DesktopAuthenticationService({
     required AuthenticationStateData authenticationStateData,
+    required LayoutStateData layoutStateData,
+    required SharedAlbumStateData sharedAlbumStateData,
     required StorageService storageService,
-  })   : _authenticationStateData = authenticationStateData,
-        _storageService = storageService;
+    required ThemeStateData themeStateData,
+  }) : super(
+          assetBundleKey: 'files/desktop_client_secret.json',
+          authenticationStateData: authenticationStateData,
+          layoutStateData: layoutStateData,
+          sharedAlbumStateData: sharedAlbumStateData,
+          storageService: storageService,
+          themeStateData: themeStateData,
+        );
 
   @override
-  Future<Client> signInInteractive() async {
-    final config = json.decode(
-      await rootBundle.loadString(
-        'files/desktop_client_secret.json',
-      ),
-    );
+  Future<void> signInInteractive() async {
+    final config = json.decode(await rootBundle.loadString(assetBundleKey));
 
     final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
 
@@ -47,7 +59,7 @@ class DesktopAuthenticationService implements IoAuthenticationService {
         Uri.parse(config['installed']['auth_uri']),
         Uri.parse(config['installed']['token_uri']),
         secret: config['installed']['client_secret'],
-        onCredentialsRefreshed: _onCredentialsRefreshed,
+        onCredentialsRefreshed: onCredentialsRefreshed,
       );
 
       final authorizationUrl = grant.getAuthorizationUrl(
@@ -85,35 +97,11 @@ class DesktopAuthenticationService implements IoAuthenticationService {
 
       await request.response.close();
 
-      await _storageService.setCredentials(client.credentials);
+      await storageService.setCredentials(client.credentials);
 
-      return _authenticationStateData.client = client;
+      authenticationStateData.client = client;
     } finally {
       await server.close();
     }
-  }
-
-  @override
-  Future<Client?> signInSilent() async {
-    final config = json.decode(
-      await rootBundle.loadString(
-        'files/desktop_client_secret.json',
-      ),
-    );
-
-    final credentials = await _storageService.getCredentials();
-
-    if (credentials != null) {
-      return _authenticationStateData.client = Client(
-        credentials,
-        identifier: config['installed']['client_id'],
-        secret: config['installed']['client_secret'],
-        onCredentialsRefreshed: _onCredentialsRefreshed,
-      );
-    }
-  }
-
-  Future<void> _onCredentialsRefreshed(Credentials credentials) async {
-    await _storageService.setCredentials(credentials);
   }
 }

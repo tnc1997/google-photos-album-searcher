@@ -21,9 +21,9 @@ class ThemeStateData extends ChangeNotifier {
 
   ThemeStateData({
     ThemeMode? themeMode,
-  }) : _themeMode = themeMode ?? ThemeMode.system;
+  }) : _themeMode = themeMode;
 
-  ThemeMode? get themeMode => _themeMode;
+  ThemeMode get themeMode => _themeMode ?? ThemeMode.system;
 
   set themeMode(ThemeMode? themeMode) {
     if (themeMode != _themeMode) {
