@@ -1,10 +1,10 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:album_searcher_for_google_photos/route_paths/album_route_path.dart';
 import 'package:album_searcher_for_google_photos/route_paths/home_route_path.dart';
 import 'package:album_searcher_for_google_photos/route_paths/route_path.dart';
 import 'package:album_searcher_for_google_photos/route_paths/settings_route_path.dart';
-import 'package:album_searcher_for_google_photos/route_paths/sign_in_route_path.dart';
+import 'package:album_searcher_for_google_photos/route_paths/welcome_route_path.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
 class AppRouteInformationParser extends RouteInformationParser<RoutePath> {
   @override
@@ -17,7 +17,7 @@ class AppRouteInformationParser extends RouteInformationParser<RoutePath> {
       case 1:
         switch (uri.pathSegments[0]) {
           case 'login':
-            return SynchronousFuture(SignInRoutePath());
+            return SynchronousFuture(WelcomeRoutePath());
           case 'settings':
             return SynchronousFuture(SettingsRoutePath());
         }
@@ -46,7 +46,7 @@ class AppRouteInformationParser extends RouteInformationParser<RoutePath> {
       return RouteInformation(
         location: '/albums/${configuration.id}',
       );
-    } else if (configuration is SignInRoutePath) {
+    } else if (configuration is WelcomeRoutePath) {
       return RouteInformation(
         location: '/login',
       );
