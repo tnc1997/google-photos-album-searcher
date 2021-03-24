@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://github.com/tnc1997/flutter-album-searcher-for-google-photos/compare/v1.0.2...v1.0.3) (2021-03-24)
+
+
+### Bug Fixes
+
+* terms of service url ([#5](https://github.com/tnc1997/flutter-album-searcher-for-google-photos/issues/5)) ([a7dde9f](https://github.com/tnc1997/flutter-album-searcher-for-google-photos/commit/a7dde9f1a4216131782e2bdbeeb558665d565093))
+
+
+### Code Refactoring
+
+* authentication services ([#4](https://github.com/tnc1997/flutter-album-searcher-for-google-photos/issues/4)) ([4a14f2e](https://github.com/tnc1997/flutter-album-searcher-for-google-photos/commit/4a14f2e17e40ae039ab59c810aa9c15c15828637))
+
 ### [1.0.2](https://github.com/tnc1997/flutter-album-searcher-for-google-photos/compare/v1.0.1...v1.0.2) (2021-03-24)
 
 
