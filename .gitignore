@@ -187,3 +187,4 @@ fabric.properties
 ### Other ###
 files/browser_client_secret.json
 files/desktop_client_secret.json
+web/firebase-config.js

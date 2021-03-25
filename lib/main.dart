@@ -11,10 +11,16 @@ import 'package:album_searcher_for_google_photos/states/layout_state.dart';
 import 'package:album_searcher_for_google_photos/states/router_state.dart';
 import 'package:album_searcher_for_google_photos/states/shared_album_state.dart';
 import 'package:album_searcher_for_google_photos/states/theme_state.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (kIsWeb) {
+    await Firebase.initializeApp();
+  }
 
   final storageService = StorageService();
 
