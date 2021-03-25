@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:album_searcher_for_google_photos/services/authentication/authentication_service.dart';
 import 'package:album_searcher_for_google_photos/services/authentication/io_authentication_service.dart';
 import 'package:album_searcher_for_google_photos/services/storage_service.dart';
@@ -7,10 +5,6 @@ import 'package:album_searcher_for_google_photos/states/authentication_state.dar
 import 'package:album_searcher_for_google_photos/states/layout_state.dart';
 import 'package:album_searcher_for_google_photos/states/shared_album_state.dart';
 import 'package:album_searcher_for_google_photos/states/theme_state.dart';
-import 'package:flutter/services.dart';
-import 'package:oauth2/oauth2.dart';
-import 'package:uni_links/uni_links.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 AuthenticationService createAuthenticationService(
   AuthenticationStateData authenticationStateData,
@@ -45,40 +39,42 @@ class MobileAuthenticationService extends IoAuthenticationService {
 
   @override
   Future<void> signInInteractive() async {
-    final config = json.decode(await rootBundle.loadString(assetBundleKey));
+    throw UnimplementedError();
 
-    final redirectUrl = Uri.parse(
-      'app.thomasclark.albumsearcherforgooglephotos://oauth2redirect',
-    );
-
-    final grant = AuthorizationCodeGrant(
-      config['installed']['client_id'],
-      Uri.parse(config['installed']['auth_uri']),
-      Uri.parse(config['installed']['token_uri']),
-      secret: config['installed']['client_secret'],
-      onCredentialsRefreshed: onCredentialsRefreshed,
-    );
-
-    final authorizationUrl = grant.getAuthorizationUrl(
-      redirectUrl,
-      scopes: [
-        'openid',
-        'https://www.googleapis.com/auth/photoslibrary.readonly',
-      ],
-    );
-
-    await launch('$authorizationUrl&access_type=offline');
-
-    final uri = await uriLinkStream.firstWhere(
-      (uri) => uri != null && uri.queryParameters.containsKey('code'),
-    ) as Uri;
-
-    final client = await grant.handleAuthorizationResponse(
-      uri.queryParameters,
-    );
-
-    await storageService.setCredentials(client.credentials);
-
-    authenticationStateData.client = client;
+    // final config = json.decode(await rootBundle.loadString(assetBundleKey));
+    //
+    // final redirectUrl = Uri.parse(
+    //   'app.thomasclark.albumsearcherforgooglephotos://oauth2redirect',
+    // );
+    //
+    // final grant = AuthorizationCodeGrant(
+    //   config['installed']['client_id'],
+    //   Uri.parse(config['installed']['auth_uri']),
+    //   Uri.parse(config['installed']['token_uri']),
+    //   secret: config['installed']['client_secret'],
+    //   onCredentialsRefreshed: onCredentialsRefreshed,
+    // );
+    //
+    // final authorizationUrl = grant.getAuthorizationUrl(
+    //   redirectUrl,
+    //   scopes: [
+    //     'openid',
+    //     'https://www.googleapis.com/auth/photoslibrary.readonly',
+    //   ],
+    // );
+    //
+    // await launch('$authorizationUrl&access_type=offline');
+    //
+    // final uri = await uriLinkStream.firstWhere(
+    //   (uri) => uri != null && uri.queryParameters.containsKey('code'),
+    // ) as Uri;
+    //
+    // final client = await grant.handleAuthorizationResponse(
+    //   uri.queryParameters,
+    // );
+    //
+    // await storageService.setCredentials(client.credentials);
+    //
+    // authenticationStateData.client = client;
   }
 }

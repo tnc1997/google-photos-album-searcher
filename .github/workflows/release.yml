@@ -24,12 +24,13 @@ jobs:
       - run: |
           gpg --batch --decrypt --output "files/browser_client_secret.json" --passphrase "$PASSPHRASE" --yes "files/browser_client_secret.json.gpg"
           gpg --batch --decrypt --output "files/desktop_client_secret.json" --passphrase "$PASSPHRASE" --yes "files/desktop_client_secret.json.gpg"
+          gpg --batch --decrypt --output "web/firebase-config.js" --passphrase "$PASSPHRASE" --yes "web/firebase-config.js.gpg"
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
       - uses: tnc1997/github-actions/actions/setup-flutter@setup-flutter_v1
         with:
           channel: 'dev'
-      - run: flutter build web --web-renderer html
+      - run: flutter build web --no-sound-null-safety --web-renderer html
       - uses: FirebaseExtended/action-hosting-deploy@v0
         env:
           FIREBASE_CLI_PREVIEWS: 'hostingchannels'
@@ -47,6 +48,7 @@ jobs:
       - run: |
           gpg --batch --decrypt --output "files/browser_client_secret.json" --passphrase "$PASSPHRASE" --yes "files/browser_client_secret.json.gpg"
           gpg --batch --decrypt --output "files/desktop_client_secret.json" --passphrase "$PASSPHRASE" --yes "files/desktop_client_secret.json.gpg"
+          gpg --batch --decrypt --output "web/firebase-config.js" --passphrase "$PASSPHRASE" --yes "web/firebase-config.js.gpg"
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
         shell: 'bash'
@@ -54,7 +56,7 @@ jobs:
         with:
           channel: 'dev'
       - run: flutter config --enable-windows-desktop
-      - run: flutter build windows
+      - run: flutter build windows --no-sound-null-safety
       - run: Compress-Archive -DestinationPath Release.zip -Path build\windows\runner\Release
       - uses: actions/upload-release-asset@v1
         env:
