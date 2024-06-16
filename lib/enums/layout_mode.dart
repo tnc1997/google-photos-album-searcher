@@ -1,4 +1,0 @@
-enum LayoutMode {
-  grid,
-  list,
-}

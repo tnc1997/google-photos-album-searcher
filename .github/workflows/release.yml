@@ -1,68 +1,150 @@
+name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 jobs:
-  create_release:
-    outputs:
-      upload_url: '${{ steps.create_release.outputs.upload_url }}'
-    runs-on: 'ubuntu-latest'
+  build_android_app_bundle:
+    name: Build Android App Bundle
+    needs:
+      - create_release
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-release@v1
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Decrypt archive
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-        id: 'create_release'
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+        run: |
+          gpg --quiet --batch --yes --decrypt --passphrase "$PASSPHRASE" --output "./archive.tar" "./archive.tar.gpg"
+          tar -xf "./archive.tar"
+          rm "./archive.tar"
+      - name: Setup Flutter
+        uses: tnc1997/github-actions/actions/setup-flutter@setup-flutter_v1
         with:
-          release_name: '${{ github.ref }}'
-          tag_name: '${{ github.ref }}'
+          channel: beta
+      - name: Build Android App Bundle
+        run: flutter build appbundle
+      - name: Upload release asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-release-asset@v1
+        with:
+          asset_content_type: application/octet-stream
+          asset_name: google-photos-album-searcher-android.aab
+          asset_path: ./build/app/outputs/bundle/release/app-release.aab
+          upload_url: ${{ needs.create_release.outputs.upload_url }}
+  build_android_application_package:
+    name: Build Android Application Package
+    needs:
+      - create_release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Decrypt archive
+        env:
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+        run: |
+          gpg --quiet --batch --yes --decrypt --passphrase "$PASSPHRASE" --output "./archive.tar" "./archive.tar.gpg"
+          tar -xf "./archive.tar"
+          rm "./archive.tar"
+      - name: Setup Flutter
+        uses: tnc1997/github-actions/actions/setup-flutter@setup-flutter_v1
+        with:
+          channel: beta
+      - name: Build Android Application Package
+        run: flutter build apk --split-per-abi
+      - name: Upload release asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-release-asset@v1
+        with:
+          asset_content_type: application/vnd.android.package-archive
+          asset_name: google-photos-album-searcher-android-arm64.apk
+          asset_path: ./build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+          upload_url: ${{ needs.create_release.outputs.upload_url }}
+      - name: Upload release asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-release-asset@v1
+        with:
+          asset_content_type: application/vnd.android.package-archive
+          asset_name: google-photos-album-searcher-android-x64.apk
+          asset_path: ./build/app/outputs/flutter-apk/app-x86_64-release.apk
+          upload_url: ${{ needs.create_release.outputs.upload_url }}
   build_web:
+    name: Build web
     needs:
       - create_release
-    runs-on: 'ubuntu-latest'
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: |
-          gpg --batch --decrypt --output "files/browser_client_secret.json" --passphrase "$PASSPHRASE" --yes "files/browser_client_secret.json.gpg"
-          gpg --batch --decrypt --output "files/desktop_client_secret.json" --passphrase "$PASSPHRASE" --yes "files/desktop_client_secret.json.gpg"
-          gpg --batch --decrypt --output "web/firebase-config.js" --passphrase "$PASSPHRASE" --yes "web/firebase-config.js.gpg"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Decrypt archive
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
-      - uses: tnc1997/github-actions/actions/setup-flutter@setup-flutter_v1
+        run: |
+          gpg --quiet --batch --yes --decrypt --passphrase "$PASSPHRASE" --output "./archive.tar" "./archive.tar.gpg"
+          tar -xf "./archive.tar"
+          rm "./archive.tar"
+      - name: Setup Flutter
+        uses: tnc1997/github-actions/actions/setup-flutter@setup-flutter_v1
         with:
-          channel: 'dev'
-      - run: flutter build web --no-sound-null-safety --web-renderer html
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        env:
-          FIREBASE_CLI_PREVIEWS: 'hostingchannels'
+          channel: beta
+      - name: Build web
+        run: flutter build web --web-renderer "html"
+      - name: Deploy hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          channelId: 'live'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIDAL_RUN_307407 }}'
-          projectId: 'tidal-run-307407'
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          channelId: live
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TIDAL_RUN_307407 }}
+          projectId: tidal-run-307407
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
   build_windows:
+    name: Build Windows
     needs:
       - create_release
-    runs-on: 'windows-latest'
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: |
-          gpg --batch --decrypt --output "files/browser_client_secret.json" --passphrase "$PASSPHRASE" --yes "files/browser_client_secret.json.gpg"
-          gpg --batch --decrypt --output "files/desktop_client_secret.json" --passphrase "$PASSPHRASE" --yes "files/desktop_client_secret.json.gpg"
-          gpg --batch --decrypt --output "web/firebase-config.js" --passphrase "$PASSPHRASE" --yes "web/firebase-config.js.gpg"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Decrypt archive
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
-        shell: 'bash'
-      - uses: tnc1997/github-actions/actions/setup-flutter@setup-flutter_v1
+        run: |
+          gpg --quiet --batch --yes --decrypt --passphrase "$PASSPHRASE" --output "./archive.tar" "./archive.tar.gpg"
+          tar -xf "./archive.tar"
+          rm "./archive.tar"
+        shell: bash
+      - name: Setup Flutter
+        uses: tnc1997/github-actions/actions/setup-flutter@setup-flutter_v1
         with:
-          channel: 'dev'
-      - run: flutter config --enable-windows-desktop
-      - run: flutter build windows --no-sound-null-safety
-      - run: Compress-Archive -DestinationPath Release.zip -Path build\windows\runner\Release
-      - uses: actions/upload-release-asset@v1
+          channel: beta
+      - name: Build Windows
+        run: flutter build windows
+      - name: Create installer
+        run: . "${env:ProgramFiles(x86)}\Inno Setup 6\iscc.exe" ".\setup.iss"
+      - name: Upload release asset
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-release-asset@v1
         with:
-          asset_content_type: 'application/zip'
-          asset_name: 'windows.zip'
-          asset_path: 'Release.zip'
-          upload_url: '${{ needs.create_release.outputs.upload_url }}'
+          asset_content_type: application/vnd.microsoft.portable-executable
+          asset_name: google-photos-album-searcher-windows-x64.exe
+          asset_path: ./Output/mysetup.exe
+          upload_url: ${{ needs.create_release.outputs.upload_url }}
+  create_release:
+    name: Create release
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          release_name: ${{ github.ref }}
+          tag_name: ${{ github.ref }}
