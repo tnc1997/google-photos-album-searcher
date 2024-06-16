@@ -1,4 +1,26 @@
 {
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "tidal-run-307407",
+          "appId": "1:6114165025:android:9acb8b47877ba9272a3e60",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "tidal-run-307407",
+          "configurations": {
+            "android": "1:6114165025:android:9acb8b47877ba9272a3e60",
+            "linux": "1:6114165025:web:55f3376c52ca07eb2a3e60",
+            "web": "1:6114165025:web:db9d0d28d53173192a3e60",
+            "windows": "1:6114165025:web:540318e30ae9d1e72a3e60"
+          }
+        }
+      }
+    }
+  },
   "hosting": {
     "public": "build/web",
     "ignore": [

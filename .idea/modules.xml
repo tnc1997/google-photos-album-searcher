@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/album_searcher_for_google_photos.iml" filepath="$PROJECT_DIR$/album_searcher_for_google_photos.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/album_searcher_for_google_photos_android.iml" filepath="$PROJECT_DIR$/android/album_searcher_for_google_photos_android.iml" />
-    </modules>
-  </component>
-</project>
