@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.5](https://github.com/tnc1997/google-photos-album-searcher/compare/v1.0.4...v1.0.5) (2024-06-16)
+
+### Code Refactoring
+
+* upgrade flutter ([#7](https://github.com/tnc1997/google-photos-album-searcher/issues/7)) ([fe852b7](https://github.com/tnc1997/google-photos-album-searcher/commit/fe852b76caf39fff798690aab71e7c4808870203))
+
 ## [1.0.4](https://github.com/tnc1997/google-photos-album-searcher/compare/v1.0.3...v1.0.4) (2021-03-25)
 
 ### Builds
