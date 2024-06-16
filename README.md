@@ -1,4 +1,4 @@
-Album Searcher for Google Photos
+# Album Searcher for Google Photos
 
 Please note that Album Searcher for Google Photos is unofficial and not endorsed by Google.
 
