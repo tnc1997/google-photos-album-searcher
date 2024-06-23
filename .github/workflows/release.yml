@@ -88,7 +88,11 @@ jobs:
           gpg --quiet --batch --yes --decrypt --passphrase "$PASSPHRASE" --output "./archive.tar" "./archive.tar.gpg"
           tar -xf "./archive.tar"
           rm "./archive.tar"
-        shell: bash
+      - name: Install dependencies
+        run: |
+          sudo apt-get update --yes && sudo apt-get upgrade --yes
+          sudo apt-get install --yes curl git unzip xz-utils zip libglu1-mesa
+          sudo apt-get install --yes clang cmake git ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
       - name: Setup Flutter
         uses: tnc1997/github-actions/actions/setup-flutter@setup-flutter_v1
         with:
@@ -180,7 +184,7 @@ jobs:
         with:
           asset_content_type: application/vnd.microsoft.portable-executable
           asset_name: google-photos-album-searcher-windows-x64.exe
-          asset_path: ./Output/mysetup.exe
+          asset_path: ./windows/packaging/innosetup/Output/mysetup.exe
           upload_url: ${{ needs.create_release.outputs.upload_url }}
   create_release:
     name: Create release
