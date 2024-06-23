@@ -1,5 +1,4 @@
 #define MyAppName "Album Searcher for Google Photos"
-#define MyAppVersion "1.0.5"
 #define MyAppPublisher "Thomas Clark"
 #define MyAppURL "https://googlephotosalbumsearcher.thomasclark.app"
 #define MyAppExeName "google_photos_album_searcher.exe"
@@ -15,7 +14,7 @@ AppVersion={#MyAppVersion}
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 DefaultDirName={autopf}\{#MyAppName}
-LicenseFile=LICENSE
+LicenseFile=..\..\..\LICENSE
 PrivilegesRequiredOverridesAllowed=dialog
 SolidCompression=yes
 WizardStyle=modern
@@ -27,7 +26,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: createallsubdirs ignoreversion recursesubdirs
+Source: "..\..\..\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: createallsubdirs ignoreversion recursesubdirs
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

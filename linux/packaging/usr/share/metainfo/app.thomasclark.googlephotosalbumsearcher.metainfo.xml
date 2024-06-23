@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>app.thomasclark.googlephotosalbumsearcher</id>
+    <name>Album Searcher for Google Photos</name>
+    <summary>Please note that Album Searcher for Google Photos is unofficial and not endorsed by Google.</summary>
+    <description>
+        <p>Please note that Album Searcher for Google Photos is unofficial and not endorsed by Google.</p>
+    </description>
+    <metadata_license>MIT</metadata_license>
+    <launchable type="desktop-id">app.thomasclark.googlephotosalbumsearcher.desktop</launchable>
+    <branding>
+        <color type="primary">#ea4335</color>
+    </branding>
+    <categories>
+        <category>Utility</category>
+    </categories>
+    <content_rating type="oars-1.1">
+        <content_attribute id="social-info">moderate</content_attribute>
+    </content_rating>
+    <developer>
+        <name>Thomas Clark</name>
+    </developer>
+    <project_license>MIT</project_license>
+    <requires>
+        <internet>always</internet>
+    </requires>
+    <supports>
+        <control>pointing</control>
+        <control>keyboard</control>
+        <control>touch</control>
+    </supports>
+    <url type="homepage">https://app.thomasclark.googlephotosalbumsearcher</url>
+</component>
