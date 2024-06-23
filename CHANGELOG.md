@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.6](https://github.com/tnc1997/google-photos-album-searcher/compare/v1.0.5...v1.0.6) (2024-06-23)
+
+### Bug Fixes
+
+* firebase incompatibility on desktop ([#9](https://github.com/tnc1997/google-photos-album-searcher/issues/9)) ([8bbe9b8](https://github.com/tnc1997/google-photos-album-searcher/commit/8bbe9b8acc1240afd153f15bfe7c79c1dfc87c7f))
+
+### Chores
+
+* add privacy and terms ([7b6ea4c](https://github.com/tnc1997/google-photos-album-searcher/commit/7b6ea4c0cd026c8a995e705436e99b2aeef035ef))
+* update terms of service text ([8bd35d5](https://github.com/tnc1997/google-photos-album-searcher/commit/8bd35d51a11c353ce300dcb6f2ef08cd397ab839))
+
 ## [1.0.5](https://github.com/tnc1997/google-photos-album-searcher/compare/v1.0.4...v1.0.5) (2024-06-16)
 
 ### Code Refactoring
