@@ -99,17 +99,12 @@ jobs:
           channel: beta
       - name: Build Linux
         run: flutter build linux
-      - name: Get version
-        id: get_version
-        uses: mikefarah/yq@v4
-        with:
-          cmd: yq ".version" "./pubspec.yaml"
       - name: Create installer
         run: |
           mkdir --parents --verbose "/tmp/google-photos-album-searcher/DEBIAN" && cp --recursive --verbose "./linux/packaging/DEBIAN/." "$_"
           mkdir --parents --verbose "/tmp/google-photos-album-searcher/opt/thomasclark/google-photos-album-searcher" && cp --recursive --verbose "./build/linux/x64/release/bundle/." "$_"
           mkdir --parents --verbose "/tmp/google-photos-album-searcher/usr" && cp --recursive --verbose "./linux/packaging/usr/." "$_"
-          sed --in-place "s/%VERSION%/$(echo "${{ steps.get_version.outputs.result }}" | grep --extended-regexp --only-matching "[0-9]+\.[0-9]+\.[0-9]+")/g" "/tmp/google-photos-album-searcher/DEBIAN/control"
+          sed --in-place "s/%VERSION%/$(yq --raw-output ".version" "./pubspec.yaml" | grep --extended-regexp --only-matching "[0-9]+\.[0-9]+\.[0-9]+")/g" "/tmp/google-photos-album-searcher/DEBIAN/control"
           dpkg-deb --build --root-owner-group --verbose "/tmp/google-photos-album-searcher"
       - name: Upload release asset
         env:
@@ -164,19 +159,18 @@ jobs:
           tar -xf "./archive.tar"
           rm "./archive.tar"
         shell: bash
+      - name: Install dependencies
+        run: |
+          choco install yq
       - name: Setup Flutter
         uses: tnc1997/github-actions/actions/setup-flutter@setup-flutter_v1
         with:
           channel: beta
       - name: Build Windows
         run: flutter build windows
-      - name: Get version
-        id: get_version
-        uses: mikefarah/yq@v4
-        with:
-          cmd: yq ".version" "./pubspec.yaml"
       - name: Create installer
-        run: . "${env:ProgramFiles(x86)}\Inno Setup 6\iscc.exe" "/DMyAppVersion=$("${{ steps.get_version.outputs.result }}" | Select-String -Pattern "([0-9]+\.[0-9]+\.[0-9]+)" | ForEach-Object { $_.Matches.Groups[1].Value })" ".\windows\packaging\innosetup\setup.iss"
+        run: |
+          . "${env:ProgramFiles(x86)}\Inno Setup 6\iscc.exe" "/DMyAppVersion=$(yq --raw-output ".version" "./pubspec.yaml" | Select-String -Pattern "([0-9]+\.[0-9]+\.[0-9]+)" | ForEach-Object { $_.Matches.Groups[1].Value })" ".\windows\packaging\innosetup\setup.iss"
       - name: Upload release asset
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
