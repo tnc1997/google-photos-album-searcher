@@ -73,6 +73,49 @@ jobs:
           asset_name: google-photos-album-searcher-android-x64.apk
           asset_path: ./build/app/outputs/flutter-apk/app-x86_64-release.apk
           upload_url: ${{ needs.create_release.outputs.upload_url }}
+  build_linux:
+    name: Build Linux
+    needs:
+      - create_release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Decrypt archive
+        env:
+          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+        run: |
+          gpg --quiet --batch --yes --decrypt --passphrase "$PASSPHRASE" --output "./archive.tar" "./archive.tar.gpg"
+          tar -xf "./archive.tar"
+          rm "./archive.tar"
+        shell: bash
+      - name: Setup Flutter
+        uses: tnc1997/github-actions/actions/setup-flutter@setup-flutter_v1
+        with:
+          channel: beta
+      - name: Build Linux
+        run: flutter build linux
+      - name: Get version
+        id: get_version
+        uses: mikefarah/yq@v4
+        with:
+          cmd: yq ".version" "./pubspec.yaml"
+      - name: Create installer
+        run: |
+          mkdir --parents --verbose "/tmp/google-photos-album-searcher/DEBIAN" && cp --recursive --verbose "./linux/packaging/DEBIAN/." "$_"
+          mkdir --parents --verbose "/tmp/google-photos-album-searcher/opt/thomasclark/google-photos-album-searcher" && cp --recursive --verbose "./build/linux/x64/release/bundle/." "$_"
+          mkdir --parents --verbose "/tmp/google-photos-album-searcher/usr" && cp --recursive --verbose "./linux/packaging/usr/." "$_"
+          sed --in-place "s/%VERSION%/$(echo "${{ steps.get_version.outputs.result }}" | grep --extended-regexp --only-matching "[0-9]+\.[0-9]+\.[0-9]+")/g" "/tmp/google-photos-album-searcher/DEBIAN/control"
+          dpkg-deb --build --root-owner-group --verbose "/tmp/google-photos-album-searcher"
+      - name: Upload release asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/upload-release-asset@v1
+        with:
+          asset_content_type: application/vnd.debian.binary-package
+          asset_name: google-photos-album-searcher-linux-x64.deb
+          asset_path: /tmp/google-photos-album-searcher.deb
+          upload_url: ${{ needs.create_release.outputs.upload_url }}
   build_web:
     name: Build web
     needs:
@@ -123,8 +166,13 @@ jobs:
           channel: beta
       - name: Build Windows
         run: flutter build windows
+      - name: Get version
+        id: get_version
+        uses: mikefarah/yq@v4
+        with:
+          cmd: yq ".version" "./pubspec.yaml"
       - name: Create installer
-        run: . "${env:ProgramFiles(x86)}\Inno Setup 6\iscc.exe" ".\setup.iss"
+        run: . "${env:ProgramFiles(x86)}\Inno Setup 6\iscc.exe" "/DMyAppVersion=$("${{ steps.get_version.outputs.result }}" | Select-String -Pattern "([0-9]+\.[0-9]+\.[0-9]+)" | ForEach-Object { $_.Matches.Groups[1].Value })" ".\windows\packaging\innosetup\setup.iss"
       - name: Upload release asset
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

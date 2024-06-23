@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Album Searcher for Google Photos
+Comment=Please note that Album Searcher for Google Photos is unofficial and not endorsed by Google.
+Icon=app.thomasclark.googlephotosalbumsearcher
+Exec=/opt/thomasclark/google-photos-album-searcher/google_photos_album_searcher
+Terminal=false
+Categories=Utility;

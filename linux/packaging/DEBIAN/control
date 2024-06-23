@@ -1,0 +1,9 @@
+Package: google-photos-album-searcher
+Version: %VERSION%-1
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: libatk1.0-0 (>= 1.12.4), libc6 (>= 2.34), libcairo-gobject2 (>= 1.10.0), libcairo2 (>= 1.2.4), libgcc-s1 (>= 3.0), libgdk-pixbuf-2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.79.0), libgtk-3-0 (>= 3.9.12), libharfbuzz0b (>= 0.6.0), libpango-1.0-0 (>= 1.14.0), libpangocairo-1.0-0 (>= 1.14.0), libstdc++6 (>= 4.1.1), zlib1g (>= 1:1.1.4)
+Maintainer: Thomas Clark <tnc1997@outlook.com>
+Description: Please note that Album Searcher for Google Photos is unofficial and not endorsed by Google.
+Homepage: https://googlephotosalbumsearcher.thomasclark.app
