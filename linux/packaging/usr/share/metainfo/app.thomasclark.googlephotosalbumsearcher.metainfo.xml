@@ -29,5 +29,5 @@
         <control>keyboard</control>
         <control>touch</control>
     </supports>
-    <url type="homepage">https://app.thomasclark.googlephotosalbumsearcher</url>
+    <url type="homepage">https://googlephotosalbumsearcher.thomasclark.app</url>
 </component>
