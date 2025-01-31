@@ -29,28 +29,28 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  cupertino_icons: ^1.0.8
-  firebase_analytics: ^11.0.1
-  firebase_core: ^3.1.0
+  cupertino_icons: ^1.0.0
+  firebase_analytics: ^11.0.0
+  firebase_core: ^3.0.0
   flutter:
     sdk: flutter
-  go_router: ^14.1.4
-  google_sign_in: ^6.2.1
+  go_router: ^14.0.0
+  google_sign_in: ^6.0.0
   google_sign_in_desktop:
      git: https://github.com/tnc1997/flutter-google-sign-in-desktop.git
-  google_sign_in_platform_interface: ^2.4.5
-  google_sign_in_web: ^0.12.4
-  googleapis: ^13.1.0
-  http: ^1.2.1
-  path: ^1.9.0
-  path_provider: ^2.1.3
-  provider: ^6.1.2
-  shared_preferences: ^2.2.3
-  url_launcher: ^6.2.6
-  web: ^0.5.1
+  google_sign_in_platform_interface: ^2.0.0
+  google_sign_in_web: ^0.12.0
+  googleapis: ^13.0.0
+  http: ^1.0.0
+  path: ^1.0.0
+  path_provider: ^2.0.0
+  provider: ^6.0.0
+  shared_preferences: ^2.0.0
+  url_launcher: ^6.0.0
+  web: ^1.0.0
 
 dev_dependencies:
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
 
