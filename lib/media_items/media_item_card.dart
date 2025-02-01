@@ -21,9 +21,11 @@ class MediaItemCard extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           if (mediaItem.baseUrl case final baseUrl?)
-            Image.network(
-              '$baseUrl=w512-h512',
+            FittedBox(
               fit: BoxFit.cover,
+              alignment: Alignment.center,
+              clipBehavior: Clip.hardEdge,
+              child: Image.network('$baseUrl=w512-h512'),
             ),
         ],
       ),
