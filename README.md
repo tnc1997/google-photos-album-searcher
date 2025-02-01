@@ -15,4 +15,4 @@ Please note that Album Searcher for Google Photos is unofficial and not endorsed
 7. Create a [Firebase project](https://console.firebase.google.com) linked to the existing [Google Cloud Platform project](https://console.cloud.google.com).
 8. Setup Firebase in the Flutter application by following [these](https://firebase.google.com/docs/flutter/setup) instructions.
 9. Run `flutter run --device-id windows` to start the application on desktop.
-10. Run `flutter run --device-id chrome --web-port 7357 --web-renderer html` to start the application on web.
+10. Run `flutter run --device-id chrome --web-port 7357` to start the application on web.
