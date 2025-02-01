@@ -1,5 +1,7 @@
 # Album Searcher for Google Photos
 
+Album Searcher for Google Photos gives you an enhanced search experience for albums.
+
 Please note that Album Searcher for Google Photos is unofficial and not endorsed by Google.
 
 ## Getting Started
