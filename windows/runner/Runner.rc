@@ -90,10 +90,10 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "Thomas Clark" "\0"
-            VALUE "FileDescription", "google_photos_album_searcher" "\0"
+            VALUE "FileDescription", "Album Searcher for Google Photos" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "google_photos_album_searcher" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 Thomas Clark. All rights reserved." "\0"
+            VALUE "InternalName", "Album Searcher for Google Photos" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 Thomas Clark. All rights reserved." "\0"
             VALUE "OriginalFilename", "google_photos_album_searcher.exe" "\0"
             VALUE "ProductName", "Album Searcher for Google Photos" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
