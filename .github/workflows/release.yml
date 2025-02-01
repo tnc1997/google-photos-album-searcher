@@ -135,7 +135,7 @@ jobs:
         with:
           channel: beta
       - name: Build web
-        run: flutter build web --web-renderer "html"
+        run: flutter build web
       - name: Deploy hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
