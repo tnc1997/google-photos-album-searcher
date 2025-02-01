@@ -62,6 +62,7 @@ class SignInCard extends StatelessWidget {
                     ),
                   ],
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
             Padding(
