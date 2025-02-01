@@ -1,6 +1,46 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [1.0.7](https://github.com/tnc1997/google-photos-album-searcher/compare/v1.0.6...v1.0.7) (2025-02-01)
+
+### Bug Fixes
+
+* album card network image ([4cd6c54](https://github.com/tnc1997/google-photos-album-searcher/commit/4cd6c545edf0d1280aa934d95473768edbde2be6))
+* album sliver app bar network image ([62f553a](https://github.com/tnc1997/google-photos-album-searcher/commit/62f553a8c6ef9952ba634d475b26d702ddebfc72))
+* media item card network image ([5a0d572](https://github.com/tnc1997/google-photos-album-searcher/commit/5a0d57233ece3487087474f80938d640d932374f))
+* sign in card rich text alignment ([c6d0309](https://github.com/tnc1997/google-photos-album-searcher/commit/c6d03095559ebf9a3a7624ec3329d733e20c499c))
+
+### Chores
+
+* create ios platform ([3d41ea1](https://github.com/tnc1997/google-photos-album-searcher/commit/3d41ea109d0815b20c4fb406858f9e9e5822e870))
+* create macos platform ([3152d2d](https://github.com/tnc1997/google-photos-album-searcher/commit/3152d2d1cac9dbfcffb57c56ccedc56d5aaf8377))
+* recreate android platform ([1f38552](https://github.com/tnc1997/google-photos-album-searcher/commit/1f38552c65945273cbfd772341d84da6a0eeab93))
+* recreate linux platform ([a87f846](https://github.com/tnc1997/google-photos-album-searcher/commit/a87f846f78a53f9d2767c34302e6d82cc2b8d279))
+* recreate web platform ([c63e63c](https://github.com/tnc1997/google-photos-album-searcher/commit/c63e63cc9639848a1c09bdf1031bda7ee387ce5c))
+* recreate windows platform ([4baed16](https://github.com/tnc1997/google-photos-album-searcher/commit/4baed167a63d8104a7a9c316199e30565baa200f))
+* update license ([a4231f6](https://github.com/tnc1997/google-photos-album-searcher/commit/a4231f6e1bdccbdfc0c5b895d2ef43707adfb992))
+* update play store feature graphic ([d5d7ffb](https://github.com/tnc1997/google-photos-album-searcher/commit/d5d7ffbb3cf93fc04187316fc638075dcc5a0911))
+
+### Styles
+
+* lowercase color values ([c54f7f1](https://github.com/tnc1997/google-photos-album-searcher/commit/c54f7f1059951b132580130683f056bb71e4a7db))
+
+### Code Refactoring
+
+* add end-of-life card ([4cf0090](https://github.com/tnc1997/google-photos-album-searcher/commit/4cf00909e5f3c0c513c29b9f1ac5bb0c0a563609))
+* update theme dynamic scheme variant ([28176c8](https://github.com/tnc1997/google-photos-album-searcher/commit/28176c8f1dde78a435b58fed06267c44944bcbe2))
+
+### Documentation
+
+* update readme ([072f73d](https://github.com/tnc1997/google-photos-album-searcher/commit/072f73d54675d0b9a4eabc4fe46a2a39148b2194))
+* update readme ([4863b44](https://github.com/tnc1997/google-photos-album-searcher/commit/4863b445e551bebb4e6c11a88160ea4fe7671b1b))
+
+### Builds
+
+* remove web renderer option ([3304c74](https://github.com/tnc1997/google-photos-album-searcher/commit/3304c7455861993afdc60e542ab801124a31575a))
+* update metainfo component url ([abd6543](https://github.com/tnc1997/google-photos-album-searcher/commit/abd6543175cf668db5915f7fea5c1802abbe1912))
+* upgrade dependencies ([26f4fcd](https://github.com/tnc1997/google-photos-album-searcher/commit/26f4fcdcc38605c0f9d86c12795db55c285b0aaf))
 
 ## [1.0.6](https://github.com/tnc1997/google-photos-album-searcher/compare/v1.0.5...v1.0.6) (2024-06-23)
 
