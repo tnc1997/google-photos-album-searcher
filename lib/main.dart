@@ -13,10 +13,10 @@ import 'albums/album_repository.dart';
 import 'albums/album_screen.dart';
 import 'albums/albums_screen.dart';
 import 'albums/caching_album_repository.dart';
+import 'authentication/authenticating_client.dart';
 import 'authentication/google_sign_in_account_notifier.dart';
 import 'authentication/google_sign_in_desktop_token_data_store.dart';
 import 'authentication/sign_in_screen.dart';
-import 'authentication/authenticating_client.dart';
 import 'common/cache_service.dart';
 import 'common/root_navigator_key.dart';
 import 'common/shell_navigator_key.dart';
@@ -182,14 +182,14 @@ class MyApp extends StatelessWidget {
       title: 'Album Searcher for Google Photos',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFEA4335),
+          seedColor: const Color(0xffea4335),
           brightness: Brightness.light,
           dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
         ),
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFEA4335),
+          seedColor: const Color(0xffea4335),
           brightness: Brightness.dark,
           dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
         ),
