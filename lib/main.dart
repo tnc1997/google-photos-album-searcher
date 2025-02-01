@@ -184,12 +184,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFFEA4335),
           brightness: Brightness.light,
+          dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
         ),
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFFEA4335),
           brightness: Brightness.dark,
+          dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
         ),
       ),
       themeMode: context.select<ThemeNotifier, ThemeMode>(
