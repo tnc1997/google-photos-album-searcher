@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../common/end_of_life_card.dart';
 import '../common/welcome_card.dart';
 import 'sign_in_card.dart';
 
@@ -25,6 +26,7 @@ class SignInScreen extends StatelessWidget {
                 children: [
                   WelcomeCard(),
                   SignInCard(),
+                  EndOfLifeCard(),
                 ],
               ),
             ),
