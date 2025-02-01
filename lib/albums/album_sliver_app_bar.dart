@@ -47,11 +47,22 @@ class _AlbumSliverAppBarState extends State<AlbumSliverAppBar> {
             future: future,
             builder: (context, snapshot) {
               if (snapshot.data?.baseUrl case final baseUrl?) {
-                return Image.network(
-                  '$baseUrl=w1024-h512',
-                  color: const Color.fromRGBO(0, 0, 0, 0.5),
-                  colorBlendMode: BlendMode.darken,
-                  fit: BoxFit.cover,
+                return Stack(
+                  children: [
+                    Positioned.fill(
+                      child: FittedBox(
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                        clipBehavior: Clip.hardEdge,
+                        child: Image.network('$baseUrl=w1024-h512'),
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: Container(
+                        color: const Color.fromRGBO(0, 0, 0, 0.5),
+                      ),
+                    ),
+                  ],
                 );
               } else {
                 return Container();
