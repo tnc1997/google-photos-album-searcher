@@ -49,16 +49,28 @@ class _AlbumCardState extends State<AlbumCard> {
           future: future,
           builder: (context, snapshot) {
             if (snapshot.data?.baseUrl case final baseUrl?) {
-              return Ink.image(
-                image: NetworkImage(
-                  '$baseUrl=w256-h256',
-                ),
-                colorFilter: const ColorFilter.mode(
-                  Color.fromRGBO(0, 0, 0, 0.5),
-                  BlendMode.darken,
-                ),
-                fit: BoxFit.cover,
-                child: child,
+              return Stack(
+                children: [
+                  Positioned.fill(
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      clipBehavior: Clip.hardEdge,
+                      child: Image.network('$baseUrl=w256-h256'),
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: Container(
+                      color: const Color.fromRGBO(0, 0, 0, 0.5),
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: child,
+                    ),
+                  ),
+                ],
               );
             }
 
