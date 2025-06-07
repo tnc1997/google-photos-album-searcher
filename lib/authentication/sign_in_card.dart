@@ -101,8 +101,8 @@ class SignInCard extends StatelessWidget {
                         ..onTap = () async {
                           await launchUrl(
                             Uri.https(
-                              'googlephotosalbumsearcher.thomasclark.app',
-                              '/terms.html',
+                              'github.com',
+                              '/tnc1997/google-photos-album-searcher/blob/main/terms.md',
                             ),
                             webOnlyWindowName: '_blank',
                           );
